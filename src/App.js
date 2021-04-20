@@ -35,6 +35,19 @@ export default class App extends Component {
     }
   }
 
+  async componentDidUpdate(prevProps, prevState) {
+    if (prevState.movieID !== this.state.movieID) {
+      try {
+        const newMovieDetails = await getMoviesByID(this.state.movieID);
+        console.log(newMovieDetails);
+      } catch (error) {
+        this.setState({
+          error,
+        });
+      }
+    }
+  }
+
   getMovieID(id) {
     this.setState({
       movieID: id,

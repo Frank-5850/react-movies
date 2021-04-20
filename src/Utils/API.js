@@ -12,12 +12,11 @@ export const getMoviesByName = async (search) => {
   }
 };
 
-export const getMoviesByID = async (movieId) => {
-  const url = `${baseUrl}?apikey=${apiKey}&i=tt1285016 `;
+export const getMoviesByID = async (movieID) => {
+  const url = `${baseUrl}?apikey=${apiKey}&i=${movieID} `;
   try {
     const results = await fetch(url);
     const movie = await results.json();
-    console.log("movie", movie);
     return movie;
   } catch (error) {
     console.log(error);
