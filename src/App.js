@@ -74,7 +74,7 @@ export default class App extends Component {
     console.log(movieDetails);
     return (
       <div className="App">
-        {this.state.isModalActive && (
+        {this.state.isModalActive ? (
           <MovieDetailModal onClose={() => this.toggleModal(false)}>
             <MovieDetails
               posterUrl={movieDetails.Poster}
@@ -87,11 +87,12 @@ export default class App extends Component {
               rating={movieDetails.Ratings[1].value}
             />
           </MovieDetailModal>
+        ) : (
+          <MovieContainer
+            movies={this.state.movies}
+            movieClicked={this.getMovieID}
+          />
         )}
-        <MovieContainer
-          movies={this.state.movies}
-          movieClicked={this.getMovieID}
-        />
       </div>
     );
   }
