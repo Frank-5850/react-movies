@@ -17,7 +17,16 @@ const MovieDetails = ({
         border: "1px solid black",
         margin: "15px",
       }}
-    ></div>
+    >
+      <img src={posterUrl} alt="" />
+      <p>{title}</p>
+      <p>{rated}</p>
+      <p>{runtime}</p>
+      <p>{genre}</p>
+      <p>{plot}</p>
+      <p>{actors}</p>
+      <p>{rating}</p>
+    </div>
   );
 };
 

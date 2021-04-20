@@ -10,6 +10,7 @@ export const getMoviesByName = async (search) => {
   } catch (error) {
     console.log(error);
   }
+  return [];
 };
 
 export const getMoviesByID = async (movieID) => {
@@ -21,4 +22,5 @@ export const getMoviesByID = async (movieID) => {
   } catch (error) {
     console.log(error);
   }
+  return null;
 };

@@ -1,8 +1,9 @@
 import "./App.css";
 import React, { Component } from "react";
 import { getMoviesByName, getMoviesByID } from "./Utils/API";
-import MovieCard from "./Components/MovieCard";
 import MovieContainer from "./Components/MovieContainer";
+import MovieDetailModal from "./Components/MovieDetailModal";
+import MovieDetails from "./Components/MovieDetails";
 
 export default class App extends Component {
   constructor(props) {
@@ -13,8 +14,11 @@ export default class App extends Component {
       movies: [],
       error: null,
       movieID: null,
+      movieDetails: null,
+      isModalActive: false,
     };
     this.getMovieID = this.getMovieID.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
   }
 
   async componentDidMount() {
@@ -39,10 +43,15 @@ export default class App extends Component {
     if (prevState.movieID !== this.state.movieID) {
       try {
         const newMovieDetails = await getMoviesByID(this.state.movieID);
-        console.log(newMovieDetails);
+        this.setState({
+          movieDetails: newMovieDetails,
+          isModalActive: true,
+        });
+        // console.log(this.state.movieDetails);
       } catch (error) {
         this.setState({
           error,
+          isModalActive: false,
         });
       }
     }
@@ -54,9 +63,31 @@ export default class App extends Component {
     });
   }
 
+  toggleModal(toggle) {
+    this.setState({
+      isModalActive: toggle,
+    });
+  }
+
   render() {
+    const { movieDetails } = this.state;
+    console.log(movieDetails);
     return (
       <div className="App">
+        {this.state.isModalActive && (
+          <MovieDetailModal onClose={() => this.toggleModal(false)}>
+            <MovieDetails
+              posterUrl={movieDetails.Poster}
+              title={movieDetails.Title}
+              rated={movieDetails.Rated}
+              runtime={movieDetails.Runtime}
+              genre={movieDetails.Genre}
+              plot={movieDetails.Plot}
+              actors={movieDetails.Actors}
+              rating={movieDetails.Ratings[1].value}
+            />
+          </MovieDetailModal>
+        )}
         <MovieContainer
           movies={this.state.movies}
           movieClicked={this.getMovieID}
