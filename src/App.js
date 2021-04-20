@@ -2,6 +2,7 @@ import "./App.css";
 import React, { Component } from "react";
 import { getMoviesByName, getMoviesByID } from "./Utils/API";
 import MovieCard from "./Components/MovieCard";
+import MovieContainer from "./Components/MovieContainer";
 
 export default class App extends Component {
   constructor(props) {
@@ -11,7 +12,9 @@ export default class App extends Component {
       isLoading: false,
       movies: [],
       error: null,
+      movieID: null,
     };
+    this.getMovieID = this.getMovieID.bind(this);
   }
 
   async componentDidMount() {
@@ -32,16 +35,19 @@ export default class App extends Component {
     }
   }
 
+  getMovieID(id) {
+    this.setState({
+      movieID: id,
+    });
+  }
+
   render() {
     return (
       <div className="App">
-        {this.state.movies.map((movies) => (
-          <MovieCard
-            title={movies.Title}
-            type={movies.Type}
-            posterUrl={movies.Poster}
-          />
-        ))}
+        <MovieContainer
+          movies={this.state.movies}
+          movieClicked={this.getMovieID}
+        />
       </div>
     );
   }

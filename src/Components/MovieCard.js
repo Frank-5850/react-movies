@@ -1,6 +1,6 @@
 import React from "react";
 
-const MovieCard = ({ title, type, posterUrl }) => {
+const MovieCard = ({ title, type, posterUrl, year, movieSelection }) => {
   return (
     <div
       style={{
@@ -8,9 +8,12 @@ const MovieCard = ({ title, type, posterUrl }) => {
         border: "1px solid black",
         margin: "15px",
       }}
+      onClick={movieSelection}
     >
       <img src={posterUrl} alt={`${title} poster`} />
-      <h3>{title}</h3>
+      <h3>
+        {title} ({year})
+      </h3>
       <p>{type}</p>
     </div>
   );
